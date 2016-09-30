@@ -17,7 +17,7 @@ var revealPoint = function(point) {
           if (window.innerHeight > 950) {
          animatePoints(pointsArray);
      }
-  /*      var sellingPoints = document.getElementsByClassName('selling-points')[0];
+  /*   var sellingPoints = document.getElementsByClassName('selling-points')[0];
        var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200; // calculation OFFSET */
      
       window.addEventListener('scroll', function(event) {
