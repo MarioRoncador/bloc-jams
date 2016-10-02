@@ -30,6 +30,22 @@
      ]
  };
 
+// Biggie Album
+ var albumBig = {
+     title: 'Life After Death',
+     artist: 'The Notorious B.I.G.',
+     label: 'Bad Boy Entertainment',
+     year: '1994',
+     albumArtUrl: 'http://www.egotripland.com/wp-content/uploads/2012/03/Notorious_BIG-Life_After_Death1-e1331104684115.jpg',
+     songs: [
+         { title: 'Hypnotize', duration: '4:01' },
+         { title: 'Fuck You Tonight', duration: '5:24' },
+         { title: 'I Love The Dough', duration: '3:45'},
+         { title: 'I Got A Story To Tell', duration: '3:18' },
+         { title: 'Kick In The Door', duration: '3:15'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -41,16 +57,16 @@
  
      return template;
  }; 
-
-
-var setCurrentAlbum = function(album) {
-     // #1
+ // #1
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
      var albumImage = document.getElementsByClassName('album-cover-art')[0];
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
  
+
+var setCurrentAlbum = function(album) {
+    
      // #2
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -68,4 +84,15 @@ var setCurrentAlbum = function(album) {
  
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+    
+     var albums = [albumPicasso,albumMarconi,albumBig];
+     var index = 1;
+     albumImage.addEventListener("click",function(event){
+        setCurrentAlbum(albums[index]);
+         index++;
+         if (index == albums.length){
+             index = 0;
+         }
+     });
  };
+
