@@ -41,9 +41,9 @@
      -webkit-transition: all 2.25s ease-in-out;
      -moz-transition: all 2.25s ease-in-out;
      transition: all 2.25s ease-in-out;
-     -webkit-transition-delay: 2.2s;
-     -moz-transition-delay: 2.2s;
-     transition-delay: 2.2s;
+     -webkit-transition-delay: 0.2s;
+     -moz-transition-delay: 0.2s;
+     transition-delay: 0.2s;
 }
 
 
