@@ -55,7 +55,7 @@
       + '</tr>'
       ;
  
-     return template;
+      return $(template);;
  }; 
  // Selecet elements that we want to populate with text dynamically
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
@@ -67,17 +67,22 @@
 
 var setCurrentAlbum = function(album) {
      // Asign values to each part of the abbum (text,images)
-     albumTitle.firstChild.nodeValue = album.title;
-     albumArtist.firstChild.nodeValue = album.artist;
-     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-     albumImage.setAttribute('src', album.albumArtUrl);
- 
-     // #Clear contents pf album song list container
-     albumSongList.innerHTML = '';
+     var $albumTitle = $('.album-view-title');
+     var $albumArtist = $('.album-view-artist');
+     var $albumReleaseInfo = $('.album-view-release-info');
+     var $albumImage = $('.album-cover-art');
+     var $albumSongList = $('.album-view-song-list');
+     $albumTitle.text(album.title);
+     $albumArtist.text(album.artist);
+     $albumReleaseInfo.text(album.year + ' ' + album.label);
+     $albumImage.attr('src', album.albumArtUrl);
+    
+     $albumSongList.empty();
  
      // #Build list of songs from album JavaScript object
      for (var i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+          var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         $albumSongList.append($newRow);
      }
  };
 
