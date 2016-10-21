@@ -193,4 +193,4 @@ $(document).ready(function(){
     $previousButton.click(prevNextSong(previousSong));
     $nextButton.click(prevNextSong(nextSong));
     }
- });
+ );
