@@ -120,32 +120,26 @@ var updatePlayerBarSong = function() {
 };
 
 
-var prevNextSong = function(instruction) {
+var prevNextSong = function() {
+    
+    //check if the skip backward button is clicked or if the skip forward button is cliked
 
-
-	if (instruction === previousSong){
- 		var getLastSongNumber = function(index) {
-    	 return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
-	 	};
-	 	 var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-	     currentSongIndex--;
-	     if (currentSongIndex < 0) {
-		 currentSongIndex = currentAlbum.songs.length - 1;
-         }
-		
-	}else if(instruction === nextSong){
-	     var getLastSongNumber = function(index) {
-    	 return index == 0 ? currentAlbum.songs.length : index;
-		  };
-		var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-	    currentSongIndex++;
-		if (currentSongIndex >= currentAlbum.songs.length) {
-            currentSongIndex = 0;
-        }
-		 
-	}
-
-	// Set a new current song
+var nextSong = function() {
+    
+    var getLastSongNumber = function(index) {
+        console.log(index);
+        return index == 0 ? currentAlbum.songs.length : index;
+    };
+    
+    var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    // incrementing_ the song here
+    currentSongIndex++;
+    
+    if (currentSongIndex >= currentAlbum.songs.length) {
+        currentSongIndex = 0;
+    }
+    
+    // Set a new current song
     currentlyPlayingSongNumber = currentSongIndex + 1;
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
@@ -156,15 +150,48 @@ var prevNextSong = function(instruction) {
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
-    var $refSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber); // change
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
     var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
     
-    $refSongNumberCell.html(pauseButtonTemplate); //change
+    $nextSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
     
 };
 
+var previousSong = function() {
+    
+    // Note the difference between this implementation and the one in
+    // nextSong()
+    var getLastSongNumber = function(index) {
+        return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
+    };
+    
+    var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    // decrementing_ the index here
+    currentSongIndex--;
+    
+    if (currentSongIndex < 0) {
+        currentSongIndex = currentAlbum.songs.length - 1;
+    }
+    
+    // Set a new current song
+    currentlyPlayingSongNumber = currentSongIndex + 1;
+    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
+    // Update the Player Bar information
+    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
+    $('.currently-playing .artist-name').text(currentAlbum.artist);
+    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
+    $('.main-controls .play-pause').html(playerBarPauseButton);
+    
+    var lastSongNumber = getLastSongNumber(currentSongIndex);
+    var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
+    
+    $previousSongNumberCell.html(pauseButtonTemplate);
+    $lastSongNumberCell.html(lastSongNumber);
+    
+};
 
 /*var findParentByClassName = function(element, targetClass) {
     if (element) {
@@ -189,8 +216,9 @@ var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
 $(document).ready(function(){
-    setCurrentAlbum(albumPicasso);
-    $previousButton.click(prevNextSong(previousSong));
-    $nextButton.click(prevNextSong(nextSong));
-    }
- );
+     setCurrentAlbum(albumPicasso);
+     $previousButton.click(prevNextSong);
+     $nextButton.click(prevNextSong);
+ });
+ 
+ 
