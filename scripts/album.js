@@ -3,7 +3,7 @@
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
  
@@ -274,7 +274,7 @@ var setupSeekBars = function() {
          updateSeekPercentage($(this), seekBarFillRatio);
      });
          // #7
-     $seekBars.find('.thumb').mousedownv(function(event) {
+     $seekBars.find('.thumb').mousedown(function(event) {
          // #8
          var $seekBar = $(this).parent();
  
@@ -320,32 +320,41 @@ var setTotalTimeInPlayerBar = function(totalTime){
     $('.total-time').text(filterTimeCode(totalTime));
 }
 
-// NUMBER 3 - 
+// NUMBER 3 - Works!
 
 var filterTimeCode = function(timeInSeconds){
-    var timeInMinutes = Math.floor(timeInSeconds);
+    var minutes = Math.floor(timeInSeconds/60);
+    var seconds = Math.floor(timeInSeconds%60);
+    
+    if(seconds < 10){
+    seconds = "0" + seconds;
+    }
+    
+    var stringNumber = minutes + ":" + seconds;
+    var timeInMinutes = stringNumber;    
     return timeInMinutes;
 }
 
 
-/*
-var togglePlayFromPlayerBar() = function(){
-    
-    if( currentSoundFile.isPaused() &&  ){ //If a song is paused and the play button is clicked in the player bar
-        
-$('.data-song-number').html(pauseButtonTemplate)//Change the song number cell from a play button to a pause button
-$playPauseButton.html(playerBarPlayButton);//Change the HTML of the player bar's play button to a pause button
+
+var togglePlayFromPlayerBar = function(){
+//var $songNumber = $(this).attr('data-song-number'); // TO MAKE IT WORK FINE I NEED TO FIGURE OUT WHAT TO ASSIGN TO THIS VARIABLE TO GET THE ELEMENT WHICH HOLDS THE PLAY/PAUSE BUTTON IN SONGS LIST
+     
+if(currentSoundFile.isPaused())//If a song is paused and the play button is clicked in the player bar, 
+{
+//$songNumber.html(pauseButtonTemplate);//Change the song number cell from a play button to a pause button
+$playPauseButton.html(playerBarPauseButton);//Change the HTML of the player bar's play button to a pause button
 currentSoundFile.play();//Play the song
-        
-    }else if( currentSoundFile !== null && i ){//If the song is playing (so a current sound file exist), and the pause button is clicked
-        
-$('.data-song-number').html(playButtonTemplate);//Change the song number cell from a pause button to a play button
-$playPauseButton.html(playerBarPauseButton);//Change the HTML of the player bar's pause button to a play button
+    
+}else if(currentSoundFile !== null)//If the song is playing (so a current sound file exist), and the pause button is clicked
+
+{
+//$songNumber.html(playButtonTemplate);//Change the song number cell from a pause button to a play button
+$playPauseButton.html(playerBarPlayButton);//Change the HTML of the player bar's pause button to a play button
 currentSoundFile.pause();//Pause the song
     
-    }
+}
 };
-
 /*var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
@@ -369,7 +378,7 @@ var currentSoundFile = null;
 var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
-var $playPauseButton = $('.main-controls .play-pause');
+var $playPauseButton = $('.main-controls .play-pause')
 
 $(document).ready(function(){
      setCurrentAlbum(albumPicasso);
