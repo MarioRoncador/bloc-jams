@@ -218,19 +218,21 @@ var previousSong = function() {
 //ASSIGNMENT 20;
 
 var togglePlayFromPlayerBar = function(){
-   
+var index = currentlyPlayingSongNumber;
+console.log($elements[index].innerHTML);
     //var $songNumber = $(this).attr('data-song-number'); // TO MAKE IT WORK FINE I NEED TO FIGURE OUT WHAT TO ASSIGN TO THIS VARIABLE TO GET THE ELEMENT WHICH HOLDS THE PLAY/PAUSE BUTTON IN SONGS LIST
-    
+
 if(currentSoundFile.isPaused())//If a song is paused and the play button is clicked in the player bar, 
 {
-//$songNumber.html(pauseButtonTemplate);//Change the song number cell from a play button to a pause button
+
+$elements[index].innerHTML = pauseButtonTemplate;//Change the song number cell from a play button to a pause button
 $playPauseButton.html(playerBarPauseButton);//Change the HTML of the player bar's play button to a pause button
 currentSoundFile.play();//Play the song
     
 }else if(currentSoundFile !== null)//If the song is playing (so a current sound file exist), and the pause button is clicked
 
 {
-//$songNumber.html(playButtonTemplate);//Change the song number cell from a pause button to a play button
+$elements[index].innerHTML = playButtonTemplate;//Change the song number cell from a pause button to a play button
 $playPauseButton.html(playerBarPlayButton);//Change the HTML of the player bar's pause button to a play button
 currentSoundFile.pause();//Pause the song
     
@@ -264,6 +266,8 @@ var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 var $playPauseButton = $('.main-controls .play-pause');
+var $elements = $('.song-item-number');
+
 
 $(document).ready(function(){
      setCurrentAlbum(albumPicasso);
